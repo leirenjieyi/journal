@@ -143,3 +143,7 @@ HEAD 表示分支上的最新一次提交,HEAD^表示上一次的提交,HEAD^^表示上上次的提交......
 > 先pull，因为两个仓库不同，发现refusing to merge unrelated histories，无法pull因为他们是两个不同的项目，要把两个不同的项目合并，git需要添加一句代码，在git pull，这句代码是在git 2.9.2版本发生的，最新的版本需要添加--allow-unrelated-histories
 > 
 > 假如我们的源是origin，分支是master，那么我们 需要这样写git pull origin master --allow-unrelated-histories需要知道，我们的源可以是本地的路径
+> ### 2.添加了密钥对到github上，采用ssh协议，却一直提示 `Permission denied (publickey)`. 
+>这应该是一个git中ssh的bug,在采用ssh-keygen生成rsa类型的密钥对时，如果不是默认的id_rsa名称，则无法使用。
+>如果采用别的密钥名称，则只能在git bash当前环境中使用，可以通过 `eval $(ssh-agent -s)`启动 ssh-agent,然后使用 `ssh-add` 将私钥添加到ssh-agent中，通过 `ssh-add -l` 可以查看 ssh-agent中的注册私钥信息。
+>总之最简单的方法就是使用默认的id_rsa名称。
