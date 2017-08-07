@@ -83,7 +83,49 @@ no changes added to commit (use "git add" and/or "git commit -a")
 有些时候,会生成一些中间文件,这些中间文件我们不想提交到版本库中,并且在 `git status`的时候也不想出现这些文件,可以在工作目录创建一个 _.gitignore_ 文件,一些常用的文件可以在 [这里](https:\\github.com/github/gitignore)找到.
 
 ## 回滚修改
-`git checkout <FileName>`回滚最近一次的 add 或是 commit,哪个最近回滚哪个;或是直接 `git checkout` 回滚工作目录中的全部修改.
+`git checkout <FileName>`回滚最近一次的 add 或是 commit,哪个最近回滚哪个;或是直接 `git checkout` 回滚工作目录中的全部修改.\
+`git reset --hard HEAD` 回滚到最近一次提交，`git reset  --hard GUID` 回滚到GUID指定的版本。
+
+```bash
+PS D:\git\Share\test.git> "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">>.\test.txt
+PS D:\git\Share\test.git> git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS D:\git\Share\test.git> git add .
+PS D:\git\Share\test.git> "cccccccccccccccccccccccccccccccccccccccccc">>.\test.txt
+PS D:\git\Share\test.git> cat .\test.txt
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+
+
+ c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+
+
+PS D:\git\Share\test.git> git checkout test.txt
+PS D:\git\Share\test.git> cat .\test.txt
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+```
+
+```bash
+PS D:\git\Share\test.git> cat .\test.txt
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+
+
+
+PS D:\git\Share\test.git> git log --pretty=oneline
+efda7f365cf605f6be152afc68ae4d1a0def5bd8 (HEAD -> master) bbbbbb
+e69ec8140fd02e8e400d9e2e388784fe80c2d3e2 a
+PS D:\git\Share\test.git> git reset --hard e69ec8140fd02e8e400d9e2e388784fe80c2d3e2
+HEAD is now at e69ec81 a
+PS D:\git\Share\test.git> cat .\test.txt
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+```
+
 
 ## 对比文件
  `git diff <File1> -- <File2>`
