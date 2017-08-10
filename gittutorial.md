@@ -6,7 +6,11 @@
     ```
     git init
     ```
-    命令即可,会在当前工作目录生成一个 _.git_目录.
+    命令即可,会在当前工作目录生成一个 _.git_目录. \
+    
+* 初始化仓库有2种方式??git?--bare?init?和git?init?区别有以下2点: \
+??1.?用git?init?初始化里面，git目录下面只有一个.git文件夹，用git?--bare?init里面的都是些配置文件，如上操纵?显示的结果 \
+??2.??用"git?init"初始化的版本库用户也可以在该目录下执行所有git方面的操作。但别的用户在将更新push上来的时候容易出现冲突。比如有用户在该目录（就称为远端仓库）下执行git操作，且有两个分支(master?和?b1)，当前在master分支下。另一个用户想把自己在本地仓库（就称为本地仓库）的master分支的更新提交到远端仓库的master分支，他就想当然的敲了git?push?origin?master:master于是乎出现错误?，因为远端仓库的用户正在master的分支上操作，而你又要把更新提交到这个master分支上，当然就出错了，确定一个repository是否为bare库的关键在于core.bare属性（boolean型属性）。core.bare属性可以有git?config命令设置，也可以通过修改config文件的方式设置，conf文件指的就是当前库下面的conf配置文件,如果这里?bare?=?true?那么即使有.git文件夹也还是不能进行相关操作。?如果使用了git?init初始化，则远程仓库的目录下，也包含work?tree，当本地仓库向远程仓库push时,?如果远程仓库正在push的分支上（如果当时不在push的分支，就没有问题）,?那么push后的结果不会反应在work?tree上,?也即在远程仓库的目录下对应的文件还是之前的内容，必须得使用git?reset?--hard才能看到push后的内容。 
 
 * 克隆远程版本库到本地
 
@@ -189,3 +193,19 @@ HEAD 表示分支上的最新一次提交,HEAD^表示上一次的提交,HEAD^^表示上上次的提交......
 >这应该是一个git中ssh的bug,在采用ssh-keygen生成rsa类型的密钥对时，如果不是默认的id_rsa名称，则无法使用。
 >如果采用别的密钥名称，则只能在git bash当前环境中使用，可以通过 `eval $(ssh-agent -s)`启动 ssh-agent,然后使用 `ssh-add` 将私钥添加到ssh-agent中，通过 `ssh-add -l` 可以查看 ssh-agent中的注册私钥信息。
 >总之最简单的方法就是使用默认的id_rsa名称。
+> ### 3. fatal:?This?operation?must?be?run?in?a?work?tree
+> 这个仓库只保存git历史提交的版本信息，而不允许用户在上面进行各种git操作，如果你硬要操作的话，只会得到下面的错误（”This?operation?must?be?run?in?a?work?tree”），所以对于远程仓库，我们初始化的时候最好使用git?--bare?init命令初始化。
+>### 4. 如何添加空文件夹到暂存区
+>git?和?svn?不同，仅仅跟踪文件的变动，不跟踪目录。这么设计是有原因的。但这会带来一些小麻烦。有时候，确实需要在代码仓库中保留某个空目录。比如测试时需要用到的空目录。变通的解决办法是在空目录下存一个?.gitignore?文件。然后?git?add?此目录后，相当于跟踪了?.gitignore?文件，产生的“副作用”就是这个“空”目录也纳入“跟踪”，最终的效果是可以?check?out?出一个看起来空空的目录。如果有许多这样的空目录，可以用下面的命令自动补充?.gitignore?文件：
+ ```shell
+ find?.??typed?empty?-and?not?regex./\.git.??-exec?touch?{}/.gitignore?\;
+```
+然后??`git?add?-f?.` ?-f是强制添加的意思，然后提交到仓库都可以了，
+递归找寻当前目录下，类型为目录，且为空，也没有?.git?开头的文件，在其中用?touch?新建一个空的?.gitignore?文件。
+>### 5. error:?refusing?to?update?checked?out?branch:?refs/heads/master
+>这是由于git默认拒绝了push操作，需要进行设置，修改.git/config文件后面添加如下代码：
+```init
+[receive]
+denyCurrentBranch = ignore
+```
+>如果使用了git?init初始化，则远程仓库的目录下，也包含work?tree，当本地仓库向远程仓库push时,?如果远程仓库正在push的分支上（如果当时不在push的分支，就没有问题）,?那么push后的结果不会反应在work?tree上,?也即在远程仓库的目录下对应的文件还是之前的内容，必须得使用git?reset?--hard才能看到push
