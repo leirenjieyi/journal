@@ -178,7 +178,25 @@ HEAD 表示分支上的最新一次提交,HEAD^表示上一次的提交,HEAD^^表示上上次的提交......
 - !*.c , !/dir/subdir/???? !开头表示不过滤
 - *.[oa]??? 支持通配符：过滤repo中所有以.o或者.a为扩展名的文件
 
+```conf
+# no .a files
+*.a
 
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+
+# ignore all files in the build/ directory
+build/
+
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+
+# ignore all .pdf files in the doc/ directory and any of its subdirectories
+doc/**/*.pdf
+```
 
 ## Q&A
 
