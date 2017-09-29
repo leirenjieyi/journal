@@ -227,3 +227,80 @@ doc/**/*.pdf
 denyCurrentBranch = ignore
 ```
 >如果使用了git?init初始化，则远程仓库的目录下，也包含work?tree，当本地仓库向远程仓库push时,?如果远程仓库正在push的分支上（如果当时不在push的分支，就没有问题）,?那么push后的结果不会反应在work?tree上,?也即在远程仓库的目录下对应的文件还是之前的内容，必须得使用git?reset?--hard才能看到push
+
+# 分支操作
+## 查看分支
+### 查看本地分支
+```cmd
+PS D:\github\journal> git branch
+* master
+```
+### 查看远程分支
+```shell
+PS D:\github\journal> git branch -r
+  origin/master
+```
+## 创建分支
+### 创建本地分支
+```shell
+PS D:\github\journal> git checkout -b test
+Switched to a new branch 'test'
+```
+### 将本地分支推送到远程仓库
+```shell
+PS D:\github\journal> git push origin test
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:leirenjieyi/journal.git
+ * [new branch]      test -> test
+```
+### 拉取远程分支
+```shell
+PS D:\github\journal> git checkout -b test origin/test
+Switched to a new branch 'test'
+M       gittutorial.md
+Branch test set up to track remote branch test from origin.
+PS D:\github\journal> git branch
+  master
+* test
+```
+方法二
+```shell
+PS D:\github\journal> git fetch origin test:test
+From github.com:leirenjieyi/journal
+ * [new branch]      test       -> test
+PS D:\github\journal> git branch
+* master
+  test
+PS D:\github\journal> git checkout test
+Switched to branch 'test'
+M       gittutorial.md
+```
+## 切换分支
+```
+PS D:\github\journal> git branch --list     '列出分支
+  master
+* test
+PS D:\github\journal> git checkout master   '切换分支
+Switched to branch 'master'
+```
+## 删除分支
+### 删除本地分支
+```shell
+PS D:\github\journal> git branch
+  master
+* test
+PS D:\github\journal> git checkout master
+Switched to branch 'master'
+M       gittutorial.md
+Your branch is up-to-date with 'origin/master'.
+PS D:\github\journal> git branch -d test
+Deleted branch test (was 554c4fb).
+```
+### 删除远程分支
+```shell
+PS D:\github\journal> git branch -r -d origin/test
+Deleted remote-tracking branch origin/test (was 554c4fb).
+PS D:\github\journal> git push origin :test
+To github.com:leirenjieyi/journal.git
+ - [deleted]         test
+```
