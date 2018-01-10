@@ -1,8 +1,9 @@
 ### 无线网卡设置
 *1 配置 /etc/wpa_supplicant/wpa_supplicant.conf
-network={
-  ssid="name"
-  psk="password"
+
+network={ \
+  ssid="name" \
+  psk="password" \
 }
 
 *2 配置 /etc/network/interfaces
