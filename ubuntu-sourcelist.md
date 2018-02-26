@@ -41,3 +41,16 @@ __网易源__
     5.04 Hoary Hedgehog 白发得刺猬 2005/04/08 
     4.10 初始发布版本 Warty Warthog 多疣的疣猪 2004/10/20
 
+
+    下一代 Debian 正式发行版的代号为 "buster" — 发布时间尚未确定
+    Debian 9（"stretch"） — 当前的稳定版
+    Debian 8（"jessie"） — 被淘汰的稳定版
+    Debian 7（"wheezy"） — 被淘汰的稳定版
+    Debian 6.0（"squeeze"） — 被淘汰的稳定版
+    Debian GNU/Linux 5.0（"lenny"） — 被淘汰的稳定版
+    Debian GNU/Linux 4.0（"etch"） — 被淘汰的稳定版
+    Debian GNU/Linux 3.1（"sarge"） — 被淘汰的稳定版
+    Debian GNU/Linux 3.0（"woody"） — 被淘汰的稳定版
+    Debian GNU/Linux 2.2（"potato"） — 被淘汰的稳定版
+    Debian GNU/Linux 2.1（"slink"） — 被淘汰的稳定版
+    Debian GNU/Linux 2.0（"hamm"） — 被淘汰的稳定版
