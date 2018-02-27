@@ -146,3 +146,29 @@ $ docker run -d \
 ```
 
 使用 docker inspect devtest 以验证卷是否已创建并正确安装。寻找Mounts 节：
+
+           "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "myvol2",
+                "Source": "/var/lib/docker/volumes/myvol2/_data",
+                "Destination": "/app",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+
+这表明mount是一个volume，它显示了正确的源和目的地，并且这个挂载是读写的。
+
+删除container 和 volume
+```
+wayne@ubuntu1604:~/docker$ docker container ls -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+03f5e94ec285        9b8ad2ed28cc        "/bin/bash"         About an hour ago   Exited (0) About an hour ago                       devtest
+wayne@ubuntu1604:~/docker$ docker container rm devtest
+devtest
+wayne@ubuntu1604:~/docker$ docker volume rm myvol2 
+myvol2
+```
