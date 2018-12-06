@@ -118,3 +118,26 @@ remove方法如果/etc/init.d/脚本还存在, 则需要使用-f参数:
 
 这样会删除各个软链接, 但是并不会删除/etc/init.d/下的脚本本身.
 
+## insserv LSB(Linux Standards Base)
+insserv 是一个使用LSB init.d中脚本依赖信息的启动顺序的组织者。update-rc.d使用insserv通过读取脚本的注释头来启用已安装的系统init脚本，并且计算所有脚本的依赖关系。
+
+头格式如下
+
+    ### BEGIN INIT INFO
+    # Provides:          boot_facility_1 [ boot_facility_2 ...]
+    # Required-Start:    boot_facility_1 [ boot_facility_2 ...]
+    # Required-Stop:     boot_facility_1 [ boot_facility_2 ...]
+    # Should-Start:      boot_facility_1 [ boot_facility_2 ...]
+    # Should-Stop:       boot_facility_1 [ boot_facility_2 ...]
+    # X-Start-Before:    boot_facility_1 [ boot_facility_2 ...]
+    # X-Stop-After:      boot_facility_1 [ boot_facility_2 ...]
+    # Default-Start:     run_level_1 [ run_level_2 ...]
+    # Default-Stop:      run_level_1 [ run_level_2 ...]
+    # X-Interactive:     true
+    # Short-Description: single_line_description
+    # Description:       multiline_description
+    ### END INIT INFO
+
+详细内容参见：man innserv 或 https://wiki.debian.org/LSBInitScripts
+
+
