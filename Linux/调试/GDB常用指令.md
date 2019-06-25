@@ -1,4 +1,11 @@
 # GDB调试总结
+## 调试连接的静态库
+代码出现core dump,发现是使用的一个静态库内部代码问题，想要连接静态库源码调试一下，用 list 文件名：行号 （help list 可以具体查看list用法)，提示找不到文件。
+首先确定你的elf文件是否带有调试信息，可以通过 objdump -h elf文件 或 readelf -s elf文件，查看elf文件中是否有调试section,一般会有debug开头的几个小节，说明是包含调试信息的。
+其次，所引用的静态库也要带有调试信息。
+然后通过 readelf -p .debug_str elf文件名，来查看一下debug_str小节中的内容，看看是相对路径引用还是绝对路径引用。如果是相对路径，可以在gdb中通过directory ../libmy/ 添加静态库代码的相对路径，show directory查看搜寻路径。
+如果是绝对路径，可以在gdb中采用set substitute-path /home/aaa/   /home/bbb/，之后，即使你的源文件1.cpp 放在 /home/bbb下面也是可以找到的了。因为gdb帮你做了字符串替换。
+
 ## 加载调试文件
 启动gdb最常用的方法是使用一个参数，指定一个可执行程序：
 
