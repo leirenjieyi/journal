@@ -47,3 +47,11 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 
 保存就生效了，重启也没问题。
+
+## 修改网卡名称
+sudo nano /etc/default/grub
+
+找到GRUB_CMDLINE_LINUX=""
+改为GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+然后sudo grub-mkconfig -o /boot/grub/grub.cfg
+重启后，网卡名称果然变成了eth0和wlan0

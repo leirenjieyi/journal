@@ -105,3 +105,5 @@
     sudo /etc/init.d/networking restart 或者 sudo service networking restart 是重启系统中的所有网卡，及重启网络服务。
 
     sudo ifdown ens33 && sudo ifup ens33 重启指定ens33网卡。（ifconfig ens33 up,ifocnfig ens33 down)
+
+    sudo ip address flush ens33 清空ens33配置
